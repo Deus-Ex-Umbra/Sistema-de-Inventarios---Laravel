@@ -7,59 +7,46 @@ use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    //Obtener todas las categorías
+    public static function getAll()
     {
-        //
+        return Categoria::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    //Crear una categoría
+    public function viewCreateCategoria()
     {
-        //
+        return view('categorias.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public static function create(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255'
+        ]);
+        Categoria::create($validate);
+        return redirect()->back();
+    }
+    
+    //Actualizar una categoría
+    public function viewUpdateCategoria($id)
+    {
+        return view('categorias.update', ['categoria' => Categoria::find($id)]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Categoria $categoria)
+    public static function update(Request $request, $id)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255'
+        ]);
+        Categoria::find($id)->update($validate);
+        return redirect()->back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categoria $categoria)
+    //Eliminar una categoría
+    public static function delete($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Categoria $categoria)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Categoria $categoria)
-    {
-        //
+        Categoria::find($id)->delete();
+        return redirect()->back();
     }
 }

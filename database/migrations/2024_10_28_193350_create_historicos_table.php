@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('historicos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_producto')->constrained('productos')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('numero_factura');
             $table->integer('entrada_fisica');
             $table->integer('salida_fisica');
             $table->integer('saldo_fisico');
@@ -23,7 +24,8 @@ return new class extends Migration
             $table->decimal('salida_valorada', 10, 2);
             $table->decimal('saldo_valorado', 10, 2);
             $table->date('fecha_movimiento');
-            $table->foreignId('id_detalle')->constrained('detalles')->onDelete('cascade')->onUpdate('cascade');
+            //$table->foreignId('id_detalle')->constrained('detalles')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('detalle');
         });
     }
 

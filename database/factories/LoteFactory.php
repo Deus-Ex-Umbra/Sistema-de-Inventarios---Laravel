@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Producto;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\InventarioController;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Lote>
@@ -26,8 +28,17 @@ class LoteFactory extends Factory
         //Agregar n meses hasta 4 años al vencimiento de fecha ingreso 
         $tiempo_vencimiento = $this->faker->numberBetween(1, 48);
         $fecha_vencimiento = $this->faker->dateTimeBetween($fecha_ingreso, '+'.$tiempo_vencimiento.' months');
+        $producto = ProductoController::getProductoById($id_producto);
+        $id_inventario = ProductoController::getInventarioIdByProductoId($id_producto);
+        $inventario = InventarioController::getInventarioById($id_inventario);
+        $producto->cantidad_total += $cantidad_total;
+        $producto->valor_total += $valor_total;
+        $inventario->cantidad_total += $cantidad_total;
+        $inventario->valor_total += $valor_total;
+        $producto->save();
+        $inventario->save();
         return [
-            'numero' => $this->faker->unique()->numberBetween(1000, 100000),
+            'numero' => $this->faker->numberBetween(1000, 100000),
             'descripcion' => $this->faker->text(100),
             'cantidad_total' => $cantidad_total,
             'valor_total' => $valor_total,

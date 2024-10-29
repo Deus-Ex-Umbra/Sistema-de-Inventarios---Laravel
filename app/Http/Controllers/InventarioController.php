@@ -9,14 +9,14 @@ class InventarioController extends Controller
 {
     //Modelo: protected $fillable = ['nombre', 'descripcion', 'cantidad_total', 'valor_total', 'estado', 'ruta_imagen'];
     //Ver todos los inventarios activos
-    public function viewAllInventariosActives()
+    public function viewAllInventarios()
     {
-        return view('inventarios.index', ['inventarios' => self::getAllInventariosActives()]);
+        return view('inventarios.index', ['inventarios' => self::getAllInventarios()]);
     }
 
-    public static function getAllInventariosActives()
+    public static function getAllInventarios()
     {
-        return Inventario::where('estado', 'activo')->get();
+        return Inventario::all();
     }
 
     //Crear un inventario
@@ -26,18 +26,33 @@ class InventarioController extends Controller
     }
 
     public static function createInventario(Request $request)
-    {
-        $validate = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:255',
-            //'cantidad_total' => 'required|integer',
-            //'valor_total' => 'required|numeric',
-            //'estado' => 'required|string|max:255',
-            'ruta_imagen' => 'nullable|string|max:255',
-        ]);
-        Inventario::create($validate);
-        return redirect()->back()->with('success', 'Inventario creado exitosamente');
+{
+    $validated = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'descripcion' => 'nullable|string|max:255',
+        'ruta_imagen' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    $data = [
+        'nombre' => $validated['nombre'],
+        'descripcion' => $validated['descripcion'] ?? '', // Asegúrate de que 'descripcion' no esté vacío.
+    ];
+
+    if ($request->hasFile('ruta_imagen')) {
+        $imagen = $request->file('ruta_imagen');
+        $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+        $imagen->move(public_path('images'), $nombreImagen);
+        $data['ruta_imagen'] = $nombreImagen;
     }
+
+    Inventario::create($data);
+
+    // Añade un mensaje de depuración para verificar que el código se ejecuta.
+    \Log::info('Inventario creado: ' . $data['nombre']);
+
+    return redirect()->route('inventario.index')->with('success', 'Inventario creado exitosamente');
+}
+
 
     //Actualizar un inventario
     public function viewUpdateInventario($id)
@@ -47,16 +62,30 @@ class InventarioController extends Controller
 
     public static function updateInventario(Request $request, $id)
     {
-        $validate = $request->validate([
+        $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:255',
-            //'cantidad_total' => 'required|integer',
-            //'valor_total' => 'required|numeric',
-            //'estado' => 'required|string|max:255',
-            'ruta_imagen' => 'nullable|string|max:255',
+            'ruta_imagen' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        Inventario::find($id)->update($validate);
-        return redirect()->back()->with('success', 'Inventario actualizado exitosamente');
+
+        $data = [
+            'nombre' => $validated['nombre'],
+            'descripcion' => $validated['descripcion'] ?? '', // Asegúrate de que 'descripcion' no esté vacío.
+        ];
+
+        if ($request->hasFile('ruta_imagen')) {
+            $imagen = $request->file('ruta_imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            $imagen->move(public_path('images'), $nombreImagen);
+            $data['ruta_imagen'] = $nombreImagen;
+        }
+
+        Inventario::find($id)->update($data);
+
+        // Añade un mensaje de depuración para verificar que el código se ejecuta.
+        \Log::info('Inventario actualizado: ' . $data['nombre']);
+
+        return redirect()->route('inventario.index')->with('success', 'Inventario actualizado exitosamente');
     }
 
     //Actualizar cantidad y valor total
@@ -78,5 +107,53 @@ class InventarioController extends Controller
         return redirect()->back()->with('success', 'Inventario eliminado exitosamente');
     }
 
+    //Buscar inventarios por condición según columna
+    public static function searchInventariosByColumn(Request $request)
+    {
+        //En el request está el nombre de la columna y el valor según el modelo Inventario
+        //Si un campo está vacío, no se toma en cuenta para la búsqueda
+        $inventarios = null;
+        foreach ($request->all() as $key => $value) {
+            if ($value != '') {
+                //Agregar dicho inventario a la lista
+                $inventarios[] = Inventario::where($key, $value)->get();
+            }
+        }
+        return $inventarios;
+    }
+
+    //Obtener todas las columnas de la tabla inventario
+    public static function getAllColumns()
+    {
+        return Inventario::get()->columns();
+    }
+
+    //Mostrar inventarios según una lista de inventarios
+    public function showInventariosByList($inventarios)
+    {
+        return view('inventarios.show', ['inventarios' => $inventarios]);
+    }
     
+    //Obtener la cantidad de productos caducados
+    public static function getCantidadProductosCaducados($inventario_id)
+    {
+        $productos = Producto::where('inventario_id', $inventario_id)->get();
+        $cantidad = 0;
+        foreach ($productos as $producto) {
+            $cantidad += ProductoController::getCantidadProductosCaducados($producto->id);
+        }
+        return $cantidad;
+    }
+
+    //Obtener el inventario según el id
+    public static function getInventarioById($id)
+    {
+        return Inventario::find($id);
+    }
+
+    //Obtener el id del inventario según el id del producto
+    public static function getInventarioIdByProductoId($producto_id)
+    {
+        return Producto::find($producto_id)->inventario_id;
+    }
 }

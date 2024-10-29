@@ -7,59 +7,58 @@ use Illuminate\Http\Request;
 
 class ProveedorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    //protected $fillable = ['nombre', 'direccion', 'telefono', 'email'];
+    //Obtener todos los proveedores
+    public function viewAllProveedores()
     {
-        //
+        return view('proveedores.index', ['proveedores' => self::getAll()]);
+    }
+    
+    public static function getAll()
+    {
+        return Proveedor::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    //Crear un proveedor
+    public function viewCreateProveedor()
     {
-        //
+        return view('proveedores.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public static function create(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'telefono' => 'required|string|max:20',
+            'email' => 'required|string|email|max:255'
+        ]);
+        Proveedor::create($validate);
+        return redirect()->back();
+    }
+    
+    //Actualizar un proveedor
+    public function viewUpdateProveedor($id)
+    {
+        return view('proveedores.update', ['proveedor' => Proveedor::find($id)]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Proveedor $proveedor)
+    public static function update(Request $request, $id)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'telefono' => 'required|string|max:20',
+            'email' => 'required|string|email|max:255'
+        ]);
+        Proveedor::find($id)->update($validate);
+        return redirect()->back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Proveedor $proveedor)
+    //Eliminar un proveedor
+    public static function delete($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Proveedor $proveedor)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Proveedor $proveedor)
-    {
-        //
+        Proveedor::find($id)->delete();
+        return redirect()->back();
     }
 }

@@ -174,3 +174,20 @@
         </div>
     </body>
 </html>
+
+@php
+    $contador = 0;
+    $contador += rand(1, 10);
+@endphp
+
+<div class="text-center mt-4">
+    <p class="text-sm text-gray-600 dark:text-gray-400">
+        Contador actual: {{ $contador }}
+    </p>
+</div>
+
+<div class="text-center mt-4">
+    <a href="{{ route('inventario.index') }}" class="text-sm text-[#FF2D20] hover:text-[#FF2D20]/70 dark:text-white dark:hover:text-white/70">
+        Ver Inventarios
+    </a>
+</div>

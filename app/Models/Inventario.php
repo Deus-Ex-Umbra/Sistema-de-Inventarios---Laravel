@@ -10,5 +10,5 @@ class Inventario extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'inventarios';
-    protected $fillable = ['nombre', 'descripcion', 'cantidad_total', 'valor_total', 'estado', 'ruta_imagen'];
+    protected $fillable = ['nombre', 'descripcion', 'cantidad_total', 'valor_total', 'ruta_imagen'];
 }

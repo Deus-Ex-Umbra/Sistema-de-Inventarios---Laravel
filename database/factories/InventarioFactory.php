@@ -28,8 +28,9 @@ class InventarioFactory extends Factory
             'descripcion' => $this->faker->sentence(),
             'cantidad_total' => 0,
             'valor_total' => 0,
-            'estado' => 'activo',
-            'ruta_imagen' => $ruta_imagen
+            //'estado' => 'activo',
+            //'ruta_imagen' => $ruta_imagen
+            'ruta_imagen' => 'inventario.jpg'
         ];
     }
 }

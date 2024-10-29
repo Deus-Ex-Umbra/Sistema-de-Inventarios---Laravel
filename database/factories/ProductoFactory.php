@@ -69,17 +69,19 @@ class ProductoFactory extends Factory
         $id_marca = Marca::all()->random()->id;
         $id_proveedor = Proveedor::all()->random()->id;
         $id_inventario = Inventario::all()->random()->id;
+        $ruta_imagen = str_replace('/', '', str_replace(' ', '_', strtolower($nombre))) . '.jpg';
+
         return [
             'nombre' => $nombre,
             'descripcion' => $this->faker->text(100),
             'cantidad_total' => 0,
             'valor_total' => 0,
-            'ruta_imagen' => $ruta_imagen,
+            //'ruta_imagen' => $ruta_imagen,
+            'ruta_imagen' => 'medicamento.jpg',
             'categoria_id' => $id_categoria,
             'marca_id' => $id_marca,
             'proveedor_id' => $id_proveedor,
             'inventario_id' => $id_inventario
-        
         ];
     }
 }

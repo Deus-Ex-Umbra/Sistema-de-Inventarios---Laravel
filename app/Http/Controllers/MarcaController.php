@@ -7,59 +7,46 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    //Obtener todas las marcas
+    public static function getAll()
     {
-        //
+        return Marca::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    //Crear una marca
+    public function viewCreateMarca()
     {
-        //
+        return view('marcas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public static function create(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255'
+        ]);
+        Marca::create($validate);
+        return redirect()->back();
+    }
+    
+    //Actualizar una marca
+    public function viewUpdateMarca($id)
+    {
+        return view('marcas.update', ['marca' => Marca::find($id)]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Marca $marca)
+    public static function update(Request $request, $id)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255'
+        ]);
+        Marca::find($id)->update($validate);
+        return redirect()->back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Marca $marca)
+    //Eliminar una marca
+    public static function delete($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Marca $marca)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Marca $marca)
-    {
-        //
+        Marca::find($id)->delete();
+        return redirect()->back();
     }
 }
