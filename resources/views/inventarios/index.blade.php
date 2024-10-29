@@ -13,9 +13,7 @@
         <button>
             Productos
         </button>
-        <button>
-            Lotes
-        </button>
+        <a href="{{ route('lotes.index') }}"><button>Lotes</button></a>
         <button>
             Proveeedores
         </button>
