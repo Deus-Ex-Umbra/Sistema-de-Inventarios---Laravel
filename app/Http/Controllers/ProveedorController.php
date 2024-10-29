@@ -59,7 +59,7 @@ class ProveedorController extends Controller
     public static function delete($id)
     {
         Proveedor::find($id)->delete();
-        return redirect()->back();
+        return redirect()->route('proveedor.index')->with('success', 'Proveedor eliminado exitosamente');
     }
 
     //Obtener todas las columnas de la tabla proveedor
