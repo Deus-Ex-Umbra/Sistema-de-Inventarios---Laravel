@@ -108,27 +108,6 @@ class InventarioController extends Controller
         return redirect()->back()->with('success', 'Inventario eliminado exitosamente');
     }
 
-    //Buscar inventarios por condición según columna
-    public static function searchInventariosByColumn(Request $request)
-    {
-        //En el request está el nombre de la columna y el valor según el modelo Inventario
-        //Si un campo está vacío, no se toma en cuenta para la búsqueda
-        $inventarios = null;
-        foreach ($request->all() as $key => $value) {
-            if ($value != '') {
-                //Agregar dicho inventario a la lista
-                $inventarios[] = Inventario::where($key, $value)->get();
-            }
-        }
-        return $inventarios;
-    }
-
-    //Obtener todas las columnas de la tabla inventario
-    public static function getAllColumns()
-    {
-        return Inventario::get()->columns();
-    }
-
     //Mostrar inventarios según una lista de inventarios
     public function showInventariosByList($inventarios)
     {
@@ -156,5 +135,48 @@ class InventarioController extends Controller
     public static function getInventarioIdByProductoId($producto_id)
     {
         return Producto::find($producto_id)->inventario_id;
+    }
+
+    //Agregar una cantidad y valor total al inventario
+    public static function addCantidadTotalAndValorTotal($id, $cantidad, $valor)
+    {
+        //Debe sumar al inventario el valor y la cantidad total
+        $inventario = Inventario::find($id);
+        $inventario->cantidad_total += $cantidad;
+        $inventario->valor_total += $valor;
+        $inventario->save();
+    }
+
+    //Restar una cantidad y valor total al inventario
+    public static function substractCantidadTotalAndValorTotal($id, $cantidad, $valor)
+    {
+        $inventario = Inventario::find($id);
+        $inventario->cantidad_total -= $cantidad;
+        $inventario->valor_total -= $valor;
+        $inventario->save();
+    }
+
+    //Obtener todas las columnas de la tabla inventario
+    public static function getAllColumnsInventario()
+    {
+        //Excepto el id
+        return array_diff(\Schema::getColumnListing('inventarios'), ['id']);
+    }
+
+    //Buscar inventarios por condición según columna
+    public static function searchInventariosByColumn(Request $request)
+    {
+        $query = Inventario::query();
+
+        $searchParams = $request->except('_token'); // Excluir el token CSRF
+
+        foreach ($searchParams as $key => $value) {
+            if (!empty($value)) {
+                //LIKE('%$value%');
+                $query->where($key, 'like', '%' . $value . '%');
+            }
+        }
+        $inventarios = $query->get();
+        return view('inventarios.index', ['inventarios' => $inventarios]);
     }
 }

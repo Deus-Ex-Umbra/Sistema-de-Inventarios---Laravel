@@ -96,4 +96,46 @@ class ProductoController extends Controller
         Producto::find($id)->update(['cantidad_total' => $cantidad, 'valor_total' => $valor]);
         return redirect()->back()->with('success', 'Producto actualizado exitosamente');
     }
+
+    //Agregar una cantidad y valor total al producto
+    public static function addCantidadTotalAndValorTotal($id, $cantidad, $valor)
+    {
+        $producto = Producto::find($id);
+        $producto->cantidad_total += $cantidad;
+        $producto->valor_total += $valor;
+        $producto->save();
+    }
+
+    //Restar una cantidad y valor total al producto
+    public static function substractCantidadTotalAndValorTotal($id, $cantidad, $valor)
+    {
+        $producto = Producto::find($id);
+        $producto->cantidad_total -= $cantidad;
+        $producto->valor_total -= $valor;
+        $producto->save();
+    }
+
+    //Obtener todas las columnas de la tabla producto
+    public static function getAllColumnsProducto()
+    {
+        //Excepto el id
+        return array_diff(\Schema::getColumnListing('productos'), ['id']);
+    }
+
+    //Buscar productos por condición según columna
+    public static function searchProductosByColumn(Request $request)
+    {
+        $query = Producto::query();
+
+        $searchParams = $request->except('_token'); // Excluir el token CSRF
+
+        foreach ($searchParams as $key => $value) {
+            if (!empty($value)) {
+                //LIKE('%$value%');
+                $query->where($key, 'like', '%' . $value . '%');
+            }
+        }
+        $productos = $query->get();
+        return view('productos.index', ['productos' => $productos]);
+    }
 }

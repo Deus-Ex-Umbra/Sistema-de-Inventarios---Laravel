@@ -13,7 +13,7 @@ class ProveedorController extends Controller
     {
         return view('proveedores.index', ['proveedores' => self::getAll()]);
     }
-    
+
     public static function getAll()
     {
         return Proveedor::all();
@@ -60,5 +60,29 @@ class ProveedorController extends Controller
     {
         Proveedor::find($id)->delete();
         return redirect()->back();
+    }
+
+    //Obtener todas las columnas de la tabla proveedor
+    public static function getAllColumnsProveedor()
+    {
+        //Excepto el id
+        return array_diff(\Schema::getColumnListing('proveedores'), ['id']);
+    }
+
+    //Buscar proveedores por condición según columna
+    public static function searchProveedoresByColumn(Request $request)
+    {
+        $query = Proveedor::query();
+
+        $searchParams = $request->except('_token'); // Excluir el token CSRF
+
+        foreach ($searchParams as $key => $value) {
+            if (!empty($value)) {
+                //LIKE('%$value%');
+                $query->where($key, 'like', '%' . $value . '%');
+            }
+        }
+        $proveedores = $query->get();
+        return view('proveedores.index', ['proveedores' => $proveedores]);
     }
 }
