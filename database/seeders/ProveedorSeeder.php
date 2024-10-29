@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\Proveedor;
 class ProveedorSeeder extends Seeder
 {
     /**
@@ -12,6 +12,6 @@ class ProveedorSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Proveedor::factory(25)->create();
     }
 }

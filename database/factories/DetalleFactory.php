@@ -16,8 +16,11 @@ class DetalleFactory extends Factory
      */
     public function definition(): array
     {
+        //protected $fillable = ['detalle_registro'];
+        //Detalles como entradas, salidas, devoluciones, reembolsos, etc., todo referido a una farmacia:
+        $detalles = $this->faker->unique()->randomElement(['Entrada', 'Salida', 'Devolución', 'Reembolso', 'Traslado', 'Otros']);
         return [
-            //
+            'detalle_registro' => $detalles
         ];
     }
 }

@@ -11,9 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //protected $table = 'lotes';
+        //protected $fillable = ['numero', 'descripcion', 'cantidad_total', 'valor_total', 'precio_unitario', 'fecha_ingreso', 'fecha_vencimiento', 'producto_id'];
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->integer('numero');
+            $table->string('descripcion')->default('Sin descripción');
+            $table->integer('cantidad_total')->default(0);
+            $table->decimal('valor_total', 10, 2)->default(0);
+            $table->decimal('precio_unitario', 10, 2)->default(0);
+            $table->date('fecha_ingreso');
+            $table->date('fecha_vencimiento');
+            $table->foreignId('producto_id')->constrained('productos')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

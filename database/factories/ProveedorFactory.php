@@ -16,8 +16,30 @@ class ProveedorFactory extends Factory
      */
     public function definition(): array
     {
+        //protected $fillable = ['nombre', 'direccion', 'telefono', 'email'];
+        $proveedor = $this->faker->unique()->randomElement([
+            // Proveedores Nacionales (Bolivia)
+            'Laboratorios Crespal', 'Valencia', 'Pharma Investi', 'Sigma Corp', 
+            'Laboratorios Lafar', 'Laboratorios INTI', 'Vita Nova', 'Cofar SA',
+            'Droguería INTI', 'Minerva', 'IFA Bolivia',
+            
+            // Proveedores Latinoamericanos
+            'Tecnofarma Internacional', 'Grupo Roemmers', 'Laboratorios Bagó',
+            'Eurofarma Latinoamérica', 'Gador SA', 'Laboratorios Chile',
+            'Medipharm Perú', 'Hersil Labs', 'Farmaindustria Perú',
+            'Laboratorios Saval', 'Grupo Biotoscana', 'Megalabs',
+            
+            // Proveedores Internacionales
+            'Cardinal Health', 'McKesson Corporation', 'AmerisourceBergen',
+            'Alliance Healthcare', 'Phoenix Group', 'Profarma', 
+            'Shanghai Pharma', 'Sinopharm Group', 'Zuellig Pharma',
+            'Medipal Holdings', 'Morris & Dickson', 'HD Smith'
+        ]);
         return [
-            //
+            'nombre' => $proveedor,
+            'direccion' => $this->faker->address,
+            'telefono' => $this->faker->phoneNumber,
+            'email' => $this->faker->email
         ];
     }
 }

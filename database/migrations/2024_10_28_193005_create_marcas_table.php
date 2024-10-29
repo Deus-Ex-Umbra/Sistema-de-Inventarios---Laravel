@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //protected $table = 'marcas';
+        //protected $fillable = ['nombre'];
         Schema::create('marcas', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('nombre');
         });
     }
 

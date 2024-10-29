@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\LugarInventario;
 
-class HistoricoSeeder extends Seeder
+class LugarInventarioSeeder extends Seeder
 {
     /**
      * Run the database seeds.

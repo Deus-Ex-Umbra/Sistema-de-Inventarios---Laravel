@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Detalle extends Model
 {
-    /** @use HasFactory<\Database\Factories\DetalleFactory> */
     use HasFactory;
+    public $timestamps = false;
+    protected $table = 'detalles';
+    protected $fillable = ['detalle_registro'];
 }

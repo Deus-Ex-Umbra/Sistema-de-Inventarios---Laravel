@@ -11,9 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //protected $table = 'auditorias';
+        //protected $fillable = ['id_inventario', 'fecha_auditoria', 'cantidad_registrada', 'cantidad_real', 'valor_registrado', 'valor_real', 'observaciones'];
         Schema::create('auditorias', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('id_inventario')->constrained('inventarios')->onDelete('cascade')->onUpdate('cascade');
+            $table->date('fecha_auditoria');
+            $table->integer('cantidad_registrada');
+            $table->integer('cantidad_real');
+            $table->decimal('valor_registrado', 10, 2);
+            $table->decimal('valor_real', 10, 2);
+            $table->string('observaciones')->nullable();
         });
     }
 

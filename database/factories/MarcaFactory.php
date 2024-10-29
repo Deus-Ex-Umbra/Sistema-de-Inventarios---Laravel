@@ -16,8 +16,23 @@ class MarcaFactory extends Factory
      */
     public function definition(): array
     {
+        //protected $fillable = ['nombre'];
+        $marca = $this->faker->unique()->randomElement([
+            // Laboratorios Internacionales
+            'Bayer', 'Pfizer', 'Sanofi', 'GlaxoSmithKline', 'Merck Sharp & Dohme',
+            'Roche', 'Novartis', 'AstraZeneca', 'Eli Lilly', 'AbbVie', 'Amgen',
+            'Biogen', 'Gilead Sciences', 'Johnson & Johnson', 'Takeda',
+            'Bristol Myers Squibb', 'Boehringer Ingelheim', 'Teva',
+            // Laboratorios Bolivianos
+            'Sigma', 'Lafar', 'Inti', 'Vita', 'Cofar', 'Bago Bolivia',
+            'Droguería INTI', 'Laboratorios Bolivia', 'Minerva', 'IFA',
+            'Laboratorios Crespal', 'Valencia', 'Pharma Investi',
+            // Otros Laboratorios Latinoamericanos
+            'Tecnofarma', 'Roemmers', 'Bagó', 'Eurofarma', 'Gador',
+            'Laboratorios Chile', 'Medipharm', 'Hersil', 'Farmaindustria'
+        ]);
         return [
-            //
+            'nombre' => $marca
         ];
     }
 }

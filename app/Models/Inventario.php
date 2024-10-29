@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inventario extends Model
 {
-    /** @use HasFactory<\Database\Factories\InventarioFactory> */
     use HasFactory;
+    public $timestamps = false;
+    protected $table = 'inventarios';
+    protected $fillable = ['nombre', 'descripcion', 'cantidad_total', 'valor_total', 'estado', 'ruta_imagen'];
 }

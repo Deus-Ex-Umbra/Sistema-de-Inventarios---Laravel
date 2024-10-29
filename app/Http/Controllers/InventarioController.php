@@ -7,59 +7,76 @@ use Illuminate\Http\Request;
 
 class InventarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    //Modelo: protected $fillable = ['nombre', 'descripcion', 'cantidad_total', 'valor_total', 'estado', 'ruta_imagen'];
+    //Ver todos los inventarios activos
+    public function viewAllInventariosActives()
     {
-        //
+        return view('inventarios.index', ['inventarios' => self::getAllInventariosActives()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public static function getAllInventariosActives()
     {
-        //
+        return Inventario::where('estado', 'activo')->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    //Crear un inventario
+    public function viewCreateInventario()
     {
-        //
+        return view('inventarios.create');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Inventario $inventario)
+    public static function createInventario(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string|max:255',
+            //'cantidad_total' => 'required|integer',
+            //'valor_total' => 'required|numeric',
+            //'estado' => 'required|string|max:255',
+            'ruta_imagen' => 'nullable|string|max:255',
+        ]);
+        Inventario::create($validate);
+        return redirect()->back()->with('success', 'Inventario creado exitosamente');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Inventario $inventario)
+    //Actualizar un inventario
+    public function viewUpdateInventario($id)
     {
-        //
+        return view('inventarios.update', ['inventario' => self::getInventarioById($id)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Inventario $inventario)
+    public static function updateInventario(Request $request, $id)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string|max:255',
+            //'cantidad_total' => 'required|integer',
+            //'valor_total' => 'required|numeric',
+            //'estado' => 'required|string|max:255',
+            'ruta_imagen' => 'nullable|string|max:255',
+        ]);
+        Inventario::find($id)->update($validate);
+        return redirect()->back()->with('success', 'Inventario actualizado exitosamente');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Inventario $inventario)
+    //Actualizar cantidad y valor total
+    public static function updateInventarioValues($id, $cantidad, $valor)
     {
-        //
+        Inventario::find($id)->update(['cantidad_total' => $cantidad, 'valor_total' => $valor]);
+        return redirect()->back()->with('success', 'Inventario actualizado exitosamente'); 
     }
+
+    //Eliminar un inventario
+    public function viewDeleteInventario($id)
+    {
+        return view('inventarios.delete', ['inventario' => self::getInventarioById($id)]);
+    }
+
+    public static function deleteInventario($id)
+    {
+        Inventario::find($id)->update(['estado' => 'inactivo']);
+        return redirect()->back()->with('success', 'Inventario eliminado exitosamente');
+    }
+
+    
 }

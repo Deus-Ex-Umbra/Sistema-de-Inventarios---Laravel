@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //protected $table = 'proveedores';
-        //protected $fillable = ['nombre', 'direccion', 'telefono', 'email'];
-        Schema::create('proveedores', function (Blueprint $table) {
+        //protected $table = 'lugares_inventarios';
+        //protected $fillable = ['nombre', 'id_inventario'];
+        Schema::create('lugares_inventarios', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('direccion');
-            $table->string('telefono');
-            $table->string('email');
+            $table->foreignId('id_inventario')->constrained('inventarios')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('proveedors');
+        Schema::dropIfExists('lugares_inventarios');
     }
 };

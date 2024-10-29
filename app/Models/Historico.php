@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Historico extends Model
 {
-    /** @use HasFactory<\Database\Factories\HistoricoFactory> */
     use HasFactory;
+    public $timestamps = false;
+    protected $table = 'historicos';
+    protected $fillable = ['id_producto', 'entrada_fisica', 'salida_fisica', 'saldo_fisico', 'entrada_valorada', 'salida_valorada', 'saldo_valorado', 'fecha_movimiento', 'id_detalle'];
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class, 'id_producto');
+    }
 }
