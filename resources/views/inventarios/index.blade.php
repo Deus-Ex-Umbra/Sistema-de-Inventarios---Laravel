@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventarios</title>
+    <title>Inventarios</title>  
 </head>
 <body>
+
     <h1>Inventarios</h1>
     @foreach ($inventarios as $inventario)
         <p><strong>Nombre:</strong> {{ $inventario->nombre }}</p>
