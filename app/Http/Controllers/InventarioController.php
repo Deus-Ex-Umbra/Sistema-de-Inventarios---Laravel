@@ -93,7 +93,7 @@ class InventarioController extends Controller
     public static function updateInventarioValues($id, $cantidad, $valor)
     {
         Inventario::find($id)->update(['cantidad_total' => $cantidad, 'valor_total' => $valor]);
-        return redirect()->back()->with('success', 'Inventario actualizado exitosamente'); 
+        return redirect()->route('inventario.index')->with('success', 'Inventario actualizado exitosamente');
     }
 
     //Eliminar un inventario
