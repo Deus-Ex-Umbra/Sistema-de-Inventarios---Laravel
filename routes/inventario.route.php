@@ -9,3 +9,4 @@ Route::post('/inventarios/create', [InventarioController::class, 'createInventar
 Route::get('/inventarios/edit/{id}', [InventarioController::class, 'viewUpdateInventario'])->name('inventario.edit');
 Route::put('/inventarios/update/{id}', [InventarioController::class, 'updateInventario'])->name('inventario.update');
 Route::delete('/inventarios/delete/{id}', [InventarioController::class, 'deleteInventario'])->name('inventario.delete');
+Route::post('/inventarios/search', [InventarioController::class, 'searchInventariosByColumn'])->name('inventario.search');
