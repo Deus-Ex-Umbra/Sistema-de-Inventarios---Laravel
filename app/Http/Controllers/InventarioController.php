@@ -80,13 +80,14 @@ class InventarioController extends Controller
             $data['ruta_imagen'] = $nombreImagen;
         }
 
-        Inventario::find($id)->update($data);
+        Inventario::findOrFail($id)->update($data);
 
         // Añade un mensaje de depuración para verificar que el código se ejecuta.
         \Log::info('Inventario actualizado: ' . $data['nombre']);
 
         return redirect()->route('inventario.index')->with('success', 'Inventario actualizado exitosamente');
     }
+
 
     //Actualizar cantidad y valor total
     public static function updateInventarioValues($id, $cantidad, $valor)
