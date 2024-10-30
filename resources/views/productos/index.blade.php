@@ -7,23 +7,48 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
-    <header>
-        <button>
-            Inventarios
-        </button>
-        <button>
-            Productos
-        </button>
-        <button>
-            Lotes
-        </button>
-        <button>
-            Proveedores
-        </button>
-    </header>
+<div class="encabezado">
+            <a href="{{ route('inventario.index') }}">
+            <div class="card">
+                <img src="{{ asset('iconos/farmacia.svg') }}">
+                <h1>San Agustin</h1>
+            </div>
+            </a>
+            <ul class="example-2">
+  <li class="icon-content">
+    <a href="{{ route('inventario.index') }}" aria-label="Spotify" data-social="spotify">
+        <div class="filled"></div>
+        <img src="{{ asset('iconos/inventario.svg') }}" alt="Inventarios">
+    </a>
+    <div class="tooltip">Inventarios</div>
+  </li>
+  <li class="icon-content">
+    <a href="{{ route('producto.index') }}" aria-label="Dribbble" data-social="dribbble">
+      <div class="filled"></div>
+      <img src="{{ asset('iconos/producto.svg') }}" alt="Productos">
+    </a>
+    <div class="tooltip">Productos</div>
+  </li>
+  <li class="icon-content">
+    <a href="{{ route('lote.index') }}" aria-label="Telegram" data-social="telegram">
+      <div class="filled"></div>
+      <img src="{{ asset('iconos/lote.svg') }}" alt="Lotes">
+</a>
+<div class="tooltip">Lotes</div>
+  </li>
+  <li class="icon-content">
+    <a href="{{ route('proveedor.index') }}" aria-label="Pinterest" data-social="pinterest">
+      <div class="filled"></div>
+      <img src="{{ asset('iconos/proveedor.svg') }}" alt="Proveedores">
+    </a>
+    <div class="tooltip">Proveedores</div>
+  </li>
+</ul>
+        </div>
 
-    @if(session('success'))
-        <div>{{ session('success') }}</div>
+
+    @if (!empty($id_inventario))
+        <a href="{{ route('producto.create', $id_inventario) }}"><button>Agregar Producto</button></a>
     @endif
     <table class='table'>
         <tr class="row">
@@ -50,10 +75,16 @@
         <td class="cell"> {{ $producto->inventario->nombre }}</td>
         <td class="cell"><img src="{{ asset('images/' . $producto->ruta_imagen) }}" alt="{{ $producto->nombre }}"></td>
         <td class="cell"><a href="{{ route('producto.edit', $producto->id) }}"><button>Editar</button></a>
-        <a href="{{ route('producto.delete', $producto->id) }}"><button>Eliminar</button></a></td>
-        </tr>
+        <form action="{{ route('producto.delete', $producto->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit">
+                <img src="{{ asset('iconos/eliminar.svg') }}" alt="Eliminar">
+                Eliminar</button>
+        </form>
     @endforeach
     </table>
-    <a href="{{ route('producto.create') }}"><button>Agregar Producto</button></a>
+    <><a href="{{ route('producto.create', ['id_inventario' => $inventario->id]) }}">Crear Producto</a>
+
 </body>
 </html>

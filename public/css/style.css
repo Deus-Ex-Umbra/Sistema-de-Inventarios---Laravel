@@ -238,8 +238,11 @@ ul {
     border-radius: 0.8rem;
   }
 }
-
-.conte
+.contenido{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+}
 .inventario{
   width: 80%;
   display: flex;
