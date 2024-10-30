@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class MarcaController extends Controller
 {
     //Obtener todas las marcas
-    public static function getAll()
+    public static function getAllMarcas()
     {
         return Marca::all();
     }
@@ -19,7 +19,7 @@ class MarcaController extends Controller
         return view('marcas.create');
     }
 
-    public static function create(Request $request)
+    public static function createMarca(Request $request)
     {
         $validate = $request->validate([
             'nombre' => 'required|string|max:255'
@@ -34,7 +34,7 @@ class MarcaController extends Controller
         return view('marcas.update', ['marca' => Marca::find($id)]);
     }
 
-    public static function update(Request $request, $id)
+    public static function updateMarca(Request $request, $id)
     {
         $validate = $request->validate([
             'nombre' => 'required|string|max:255'
@@ -44,7 +44,7 @@ class MarcaController extends Controller
     }
 
     //Eliminar una marca
-    public static function delete($id)
+    public static function deleteMarca($id)
     {
         Marca::find($id)->delete();
         return redirect()->back();
