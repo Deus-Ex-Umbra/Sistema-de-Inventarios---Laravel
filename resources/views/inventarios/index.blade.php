@@ -91,7 +91,11 @@
          <div class="bottom-bottom">
          <div class="botones">
          <a href="{{ route('inventario.edit', $inventario->id) }}"><button class="btn open-modal-edit"><img src="{{ asset('iconos/editar.svg') }}" alt="Editar"></button></a>
-         <a href="{{ route('inventario.delete', $inventario->id) }}"><button class="btn open-modal-delete"><img src="{{ asset('iconos/eliminar.svg') }}" alt="Eliminar"></button></a>
+         <form action="{{ route('inventario.delete', $inventario->id) }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn"><img src="{{ asset('iconos/eliminar.svg') }}" alt="Eliminar"></button>
+         </form>
          </div>
      </div>
      </div>
