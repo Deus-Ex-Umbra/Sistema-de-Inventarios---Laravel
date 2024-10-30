@@ -20,16 +20,27 @@
             Proveedores
         </button>
     </header>
-
+    <table class="table">
+        <tr class="row">
+            <td class="cell">Nombre</td>
+            <td class="cell">Direccion</td>
+            <td class="cell">Telefono</td>
+            <td class="cell">Email</td>
+            <td class="cell">Operaciones</td>
+        </tr>
     @foreach ($proveedores as $proveedor)
-        <p><strong>Nombre:</strong> {{ $proveedor->nombre }}</p>
-        <p><strong>Dirección:</strong> {{ $proveedor->direccion }}</p>
-        <p><strong>Teléfono:</strong> {{ $proveedor->telefono }}</p>
-        <p><strong>Email:</strong> {{ $proveedor->email }}</p>
-        <a href="{{ route('proveedor.edit', $proveedor->id) }}"><button>Editar</button></a>
-        <a href="{{ route('proveedor.delete', $proveedor->id) }}"><button>Eliminar</button></a>
-        <hr>
+        <tr class="row">
+        <th class="cell"> {{ $proveedor->nombre }}</th>
+        <th class="cell"> {{ $proveedor->direccion }}</th>
+        <th class="cell"> {{ $proveedor->telefono }}</th>
+        <th class="cell"> {{ $proveedor->email }}</th>
+        <th class="cell">
+        <a href="{{ route('lote.edit', $lote->id) }}"><button><img src="{{ asset('iconos/editar.svg') }}" alt="Editar"></button></a>
+            <a href="{{ route('lote.delete', $lote->id) }}"><button><img src="{{ asset('iconos/eliminar.svg') }}" alt="Eliminar"></button></a>
+        </th>
+        </tr>
     @endforeach
+    </table>
 
     <a href="{{ route('proveedor.create') }}"><button>Agregar Proveedor</button></a>
 </body>

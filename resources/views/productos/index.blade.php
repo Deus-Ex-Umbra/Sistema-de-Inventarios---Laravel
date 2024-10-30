@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos</title>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
     <header>
@@ -24,21 +25,35 @@
     @if(session('success'))
         <div>{{ session('success') }}</div>
     @endif
-
+    <table class='table'>
+        <tr class="row">
+            <th class="cell">Nombre</th>
+            <th class="cell">Descripción</th>
+            <th class="cell">Cantidad Total</th>
+            <th class="cell">Valor Total</th>
+            <th class="cell">Categoría</th>
+            <th class="cell">Marca</th>
+            <th class="cell">Proveedor</th>
+            <th class="cell">Inventario</th>
+            <th class="cell">Imagen</th>
+            <th class="cell">Operaciones</th>
+        </tr>
     @foreach ($productos as $producto)
-        <p><strong>Nombre:</strong> {{ $producto->nombre }}</p>
-        <p><strong>Descripción:</strong> {{ $producto->descripcion }}</p>
-        <p><strong>Cantidad Total:</strong> {{ $producto->cantidad_total }}</p>
-        <p><strong>Valor Total:</strong> {{ $producto->valor_total }}</p>
-        <p><strong>Categoría:</strong> {{ $producto->categoria->nombre }}</p>
-        <p><strong>Marca:</strong> {{ $producto->marca->nombre }}</p>
-        <p><strong>Proveedor:</strong> {{ $producto->proveedor->nombre }}</p>
-        <p><strong>Inventario:</strong> {{ $producto->inventario->nombre }}</p>
-        <img src="{{ asset('images/' . $producto->ruta_imagen) }}" alt="{{ $producto->nombre }}">
-        <a href="{{ route('producto.edit', $producto->id) }}"><button>Editar</button></a>
-        <a href="{{ route('producto.delete', $producto->id) }}"><button>Eliminar</button></a>
+        <tr class="row">
+        <td class="cell"> {{ $producto->nombre }}</td>
+        <td class="cell"> {{ $producto->descripcion }}</td>
+        <td class="cell"> {{ $producto->cantidad_total }}</td>
+        <td class="cell"> {{ $producto->valor_total }}</td>
+        <td class="cell"> {{ $producto->categoria->nombre }}</td>
+        <td class="cell"> {{ $producto->marca->nombre }}</td>
+        <td class="cell"> {{ $producto->proveedor->nombre }}</td>
+        <td class="cell"> {{ $producto->inventario->nombre }}</td>
+        <td class="cell"><img src="{{ asset('images/' . $producto->ruta_imagen) }}" alt="{{ $producto->nombre }}"></td>
+        <td class="cell"><a href="{{ route('producto.edit', $producto->id) }}"><button>Editar</button></a>
+        <a href="{{ route('producto.delete', $producto->id) }}"><button>Eliminar</button></a></td>
+        </tr>
     @endforeach
-
+    </table>
     <a href="{{ route('producto.create') }}"><button>Agregar Producto</button></a>
 </body>
 </html>

@@ -147,6 +147,7 @@ ul {
   background-color: #000;
   transition: all 0.3s ease-in-out;
 }
+
 .example-2 .icon-content a:hover .filled {
   height: 100%;
 }
@@ -166,6 +167,7 @@ ul {
 .example-2 .icon-content a[data-social="telegram"] ~ .tooltip {
   background-color: #0088cc;
 }
+
 
 .buscador{
   margin: 30px 80px 40px 0;
@@ -249,8 +251,8 @@ ul {
 }
 
 .card {
-  width: 280px;
-  height: 280px;
+  width: 300px;
+  height: 300px;
   background: white;
   border-radius: 32px;
   padding: 3px;
@@ -353,7 +355,7 @@ background-color:#40c9ff51;
 
 .card .bottom .content .detalles div strong {
   display: block;
-  font-size: 1.4em;
+  font-size: 1em;
   color: #3f51b5;
 }
 

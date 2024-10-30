@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="encabezado">
-            <a href="index.php">
+            <a href="{{ route('inventario.index') }}">
             <div class="card">
                 <img src="{{ asset('iconos/farmacia.svg') }}">
                 <h1>San Agustin</h1>
@@ -16,7 +16,7 @@
             </a>
             <ul class="example-2">
   <li class="icon-content">
-    <a href="index.php" aria-label="Spotify" data-social="spotify">
+    <a href="{{ route('inventario.index') }}" aria-label="Spotify" data-social="spotify">
         <div class="filled"></div>
         <img src="{{ asset('iconos/inventario.svg') }}" alt="Inventarios">
     </a>
@@ -37,7 +37,7 @@
 <div class="tooltip">Lotes</div>
   </li>
   <li class="icon-content">
-    <a href="php/viewbrand.php" aria-label="Pinterest" data-social="pinterest">
+    <a href="{{ route('proveedor.index') }}" aria-label="Pinterest" data-social="pinterest">
       <div class="filled"></div>
       <img src="{{ asset('iconos/proveedor.svg') }}" alt="Proveedores">
     </a>
