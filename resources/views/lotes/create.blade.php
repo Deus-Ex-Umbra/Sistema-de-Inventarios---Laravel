@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Crear Nuevo Lote</h1>
-    <form action="{{ route('lote.store') }}" method="POST">
+    <form action="{{ route('lote.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="numero">Número:</label>

@@ -12,11 +12,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ¿Está seguro que desea eliminar este inventario?
+                    ¿Está seguro que desea eliminar este proveedor?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <form action="{{ route('inventario.destroy', $inventario->id) }}" method="POST" style="display: inline;">
+                    <form action="{{ route('proveedor.destroy', $proveedor->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>
