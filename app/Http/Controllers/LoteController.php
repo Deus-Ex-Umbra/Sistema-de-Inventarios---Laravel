@@ -32,9 +32,9 @@ class LoteController extends Controller
 
 
     //Crear un lote
-    public function viewCreateLote()
+    public function viewCreateLote($id_producto)
     {
-        return view('lotes.create');
+        return view('lotes.create', ['producto_id' => $id_producto]);
     }
 
     public function createLote(Request $request)

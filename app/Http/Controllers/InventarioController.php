@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class InventarioController extends Controller
 {
-    //Modelo: protected $fillable = ['nombre', 'descripcion', 'cantidad_total', 'valor_total', 'estado', 'ruta_imagen'];
+    //Modelo: protected $fillable = ['nombre', 'descripcion', 'cantidad_total', 'valor_total', 'ruta_imagen'];
     //Ver todos los inventarios activos
     public function viewAllInventarios()
     {
@@ -104,8 +104,7 @@ class InventarioController extends Controller
 
     public static function deleteInventario($id)
     {
-        Inventario::find($id)->update(['estado' => 'inactivo']);
-        return redirect()->back()->with('success', 'Inventario eliminado exitosamente');
+        return redirect()->route('inventario.index')->with('success', 'Inventario eliminado exitosamente');
     }
 
     //Mostrar inventarios según una lista de inventarios
@@ -160,7 +159,7 @@ class InventarioController extends Controller
     public static function getAllColumnsInventario()
     {
         //Excepto el id
-        return array_diff(\Schema::getColumnListing('inventarios'), ['id']);
+        return array_diff(\Schema::getColumnListing('inventarios'), ['id', 'cantidad_total', 'valor_total', 'ruta_imagen']);
     }
 
     //Buscar inventarios por condición según columna

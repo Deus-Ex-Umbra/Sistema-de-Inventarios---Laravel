@@ -47,24 +47,24 @@
         </div>
 
     <div class="contenido">
-    <div class="buscador">
-        <form action="{{ route('inventario.search') }}" method="post">
-            @csrf
-            <select name="search_column">
-                    <option value="nombre">Nombre</option>
-                    <option value="descripcion">Descripción</option>
-                    <option value="cantidad_total">Cantidad Total</option>
-                    <option value="valor_total">Valor Total</option>
-                </select>
-            <div class="input-container">
-                <input type="text" name="search_value" placeholder="Buscar...">
-                <button type="submit">
-                    <img src="{{ asset('iconos/lupa.svg') }}" alt="Buscar">
-                </button>
-            </div>
-        </form>
-    </div>
-    
+        <div class="buscador">
+            <form action="{{ route('inventario.search') }}" method="post">
+                @csrf
+                <select name="search_column">
+                        <option value="nombre">Nombre</option>
+                        <option value="descripcion">Descripción</option>
+                        <option value="cantidad_total">Cantidad Total</option>
+                        <option value="valor_total">Valor Total</option>
+                    </select>
+                <div class="input-container">
+                    <input type="text" name="search_value" placeholder="Buscar...">
+                    <button type="submit">
+                        <img src="{{ asset('iconos/lupa.svg') }}" alt="Buscar">
+                    </button>
+                </div>
+            </form>
+        </div>
+        
     @if(session('success'))
         <div>{{ session('success') }}</div>
     @endif
