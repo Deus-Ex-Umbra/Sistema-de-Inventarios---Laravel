@@ -49,6 +49,8 @@ class InventarioController extends Controller
 
     // Añade un mensaje de depuración para verificar que el código se ejecuta.
     \Log::info('Inventario creado: ' . $data['nombre']);
+    // Almacenar el mensaje en la sesión para que esté disponible después de la redirección
+    session()->flash('success', 'Inventario creado exitosamente');
 
     return redirect()->route('inventario.index')->with('success', 'Inventario creado exitosamente');
 }

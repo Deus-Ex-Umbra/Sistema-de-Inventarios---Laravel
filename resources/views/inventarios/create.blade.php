@@ -14,74 +14,9 @@
             overlay.style.display = 'flex';
             setTimeout(() => {
                 overlay.style.display = 'none';
-            }, 300);
+            }, 3000);
         @endif
     </script>
-    <input type="text" name="descripcion" placeholder="Descripción" required>
-    <input type="file" name="ruta_imagen" placeholder="Imagen" required>
-    <button type="submit">Crear Inventario</button>
-</form>
-
-<style>
-    form {
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 0 30px rgba(0,0,0,0.2);
-        width: 400px;
-        animation: slideIn 0.5s ease-out;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000;
-    }
-
-    @keyframes slideIn {
-        from {
-            transform: translate(-50%, -100%);
-            opacity: 0;
-        }
-        to {
-            transform: translate(-50%, -50%);
-            opacity: 1;
-        }
-    }
-
-    input {
-        width: 100%;
-        padding: 12px;
-        margin: 8px 0;
-        border: 2px solid #eee;
-        border-radius: 8px;
-        box-sizing: border-box;
-        transition: all 0.3s ease;
-        font-size: 14px;
-    }
-
-    input:focus {
-        border-color: #40c9ff;
-        outline: none;
-        box-shadow: 0 0 8px rgba(64,201,255,0.3);
-    }
-
-    button {
-        width: 100%;
-        padding: 12px;
-        background: linear-gradient(135deg, #40c9ff 0%, #3f51b5 100%);
-        border: none;
-        border-radius: 8px;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 10px;
-    }
-
-    button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(63,81,181,0.3);
-    }
 
     <style>
         .modal-overlay {
