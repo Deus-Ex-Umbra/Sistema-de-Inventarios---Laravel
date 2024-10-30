@@ -237,7 +237,6 @@ ul {
   }
 }
 
-
 .inventario{
   width: 80%;
   display: flex;
@@ -354,7 +353,7 @@ background-color:#40c9ff51;
 
 .card .bottom .content .detalles div strong {
   display: block;
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: #3f51b5;
 }
 
