@@ -31,9 +31,9 @@ class ProductoController extends Controller
     }
 
     //Crear un producto
-    public function viewCreateProducto()
+    public function viewCreateProducto($id_inventario)
     {
-        return view('productos.create');
+        return view('productos.create', ['inventario_id' => $id_inventario]);
     }
 
     public static function create(Request $request)
@@ -119,7 +119,7 @@ class ProductoController extends Controller
     public static function getAllColumnsProducto()
     {
         //Excepto el id
-        return array_diff(\Schema::getColumnListing('productos'), ['id']);
+        return array_diff(\Schema::getColumnListing('productos'), ['id', 'cantidad_total', 'valor_total', 'ruta_imagen']);
     }
 
     //Buscar productos por condición según columna
