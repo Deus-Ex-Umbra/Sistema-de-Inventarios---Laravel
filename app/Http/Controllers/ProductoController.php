@@ -11,10 +11,10 @@ class ProductoController extends Controller
     //Obtener todos los productos
     public function viewAllProductos()
     {
-        return view('productos.index', ['productos' => self::getAll()]);
+        return view('productos.index', ['productos' => self::getAllProductos()]);
     }
 
-    public static function getAll()
+    public static function getAllProductos()
     {
         return Producto::all();
     }
@@ -22,7 +22,7 @@ class ProductoController extends Controller
     //Obtener todos los productos según inventario
     public function viewAllProductosByInventario($inventario_id)
     {
-        return view('productos.index', ['productos' => self::getAllByInventario($inventario_id)]);
+        return view('productos.index', ['productos' => self::getAllByInventario($inventario_id), 'id_inventario' => $inventario_id]);
     }
 
     public static function getAllByInventario($inventario_id)
@@ -36,19 +36,47 @@ class ProductoController extends Controller
         return view('productos.create', ['inventario_id' => $id_inventario]);
     }
 
-    public static function create(Request $request)
+    public static function createProducto(Request $request)
     {
         $validate = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
-            //'cantidad_total' => 'required|integer',
-            //'valor_total' => 'required|integer',
-            'ruta_imagen' => 'required|string|max:255',
+            'ruta_imagen' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
             'categoria_id' => 'required|integer',
             'marca_id' => 'required|integer',
             'proveedor_id' => 'required|integer',
             'inventario_id' => 'required|integer'
         ]);
+        /*$data = [
+            'nombre' => $validated['nombre'],
+            'descripcion' => $validated['descripcion'] ?? '', // Asegúrate de que 'descripcion' no esté vacío.
+        ];
+    
+        if ($request->hasFile('ruta_imagen')) {
+            $imagen = $request->file('ruta_imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            $imagen->move(public_path('images'), $nombreImagen);
+            $data['ruta_imagen'] = $nombreImagen;
+        }*/
+
+        $data = [
+            'nombre' => $validate['nombre'],
+            'descripcion' => $validate['descripcion'],
+            'categoria_id' => $validate['categoria_id'],
+            'marca_id' => $validate['marca_id'],
+            'proveedor_id' => $validate['proveedor_id'],
+            'inventario_id' => $validate['inventario_id'],
+        ];
+
+        if($request->hasFile('ruta_imagen')){
+            $imagen = $request->file('ruta_imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            $imagen->move(public_path('images'), $nombreImagen);
+            $data['ruta_imagen'] = $nombreImagen;
+        }
+        $producto = Producto::create($data);
+        $id_inventario = $producto->inventario_id;
+        return redirect()->route('inventario.productos', $id_inventario)->with('success', 'Producto actualizado exitosamente');
     }
 
     //Actualizar un producto
@@ -57,13 +85,48 @@ class ProductoController extends Controller
         return view('productos.update', ['producto' => self::getProductoById($id)]);
     }
 
+    public static function updateProducto(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+            'ruta_imagen' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'categoria_id' => 'required|integer',
+            'marca_id' => 'required|integer',
+            'proveedor_id' => 'required|integer',
+        ]);
+    
+        $data = [
+            'nombre' => $validate['nombre'],
+            'descripcion' => $validate['descripcion'],
+            'categoria_id' => $validate['categoria_id'],
+            'marca_id' => $validate['marca_id'],
+            'proveedor_id' => $validate['proveedor_id'],
+        ];
+    
+        if ($request->hasFile('ruta_imagen')) {
+            $imagen = $request->file('ruta_imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            $imagen->move(public_path('images'), $nombreImagen);
+            $data['ruta_imagen'] = $nombreImagen; // Añadimos la ruta de la imagen al arreglo de datos
+        }
+    
+        // Actualizamos el producto con todos los datos en el arreglo $data
+        $producto = Producto::findOrFail($id);
+        $producto->update($data);
+    
+        // Redireccionamos a la ruta deseada
+        return redirect()->route('inventario.productos', $producto->inventario_id)->with('success', 'Producto actualizado exitosamente');
+    }
+    
+
     public static function getProductoById($id)
     {
         return Producto::find($id);
     }
 
     //Eliminar un producto
-    public static function delete($id)
+    public static function deletProducto($id)
     {
         Producto::find($id)->delete();
         return redirect()->route('producto.index')->with('success', 'Producto eliminado exitosamente');

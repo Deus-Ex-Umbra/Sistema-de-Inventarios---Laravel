@@ -11,7 +11,7 @@ class ProveedorController extends Controller
     //Obtener todos los proveedores
     public function viewAllProveedores()
     {
-        return view('proveedores.index', ['proveedores' => self::getAll()]);
+        return view('proveedores.index', ['proveedores' => self::getAllProveedores()]);
     }
 
     public static function getAllProveedores()
@@ -58,7 +58,7 @@ class ProveedorController extends Controller
     //Eliminar un proveedor
     public static function deleteProveedor($id)
     {
-        Proveedor::find($id)->delete();
+        Proveedor::findOrFail($id)->delete();
         return redirect()->route('proveedor.index')->with('success', 'Proveedor eliminado exitosamente');
     }
 
@@ -84,5 +84,11 @@ class ProveedorController extends Controller
         }
         $proveedores = $query->get();
         return view('proveedores.index', ['proveedores' => $proveedores]);
+    }
+
+    //Devolver todos los proveedores únicos
+    public static function getAllUniqueProveedores()
+    {
+        return Proveedor::distinct()->get();
     }
 }

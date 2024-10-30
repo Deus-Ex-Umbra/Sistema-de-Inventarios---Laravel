@@ -13,4 +13,4 @@ Route::delete('/inventarios/delete/{id_inventario}', [InventarioController::clas
 Route::post('/inventarios/search', [InventarioController::class, 'searchInventariosByColumn'])->name('inventario.search');
 Route::get('/inventarios/{id_inventario}/productos', [ProductoController::class, 'viewAllProductosByInventario'])->name('inventario.productos');
 Route::get('/inventarios/{id_inventario}/productos/create', [ProductoController::class, 'viewCreateProducto'])->name('producto.create');
-Route::post('/inventarios/{id_inventario}/productos/create', [ProductoController::class, 'create'])->name('producto.store');
+Route::post('/inventarios/productos/create', [ProductoController::class, 'createProducto'])->name('producto.store');

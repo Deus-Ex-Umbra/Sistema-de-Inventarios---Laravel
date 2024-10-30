@@ -49,4 +49,10 @@ class CategoriaController extends Controller
         Categoria::find($id)->delete();
         return redirect()->back();
     }
+
+    //Devolver todas las categorías únicas
+    public static function getAllUniqueCategorias()
+    {
+        return Categoria::distinct()->get();
+    }
 }

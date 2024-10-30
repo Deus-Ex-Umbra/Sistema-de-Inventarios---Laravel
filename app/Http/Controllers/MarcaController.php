@@ -49,4 +49,10 @@ class MarcaController extends Controller
         Marca::find($id)->delete();
         return redirect()->back();
     }
+
+    //Devolver todas las marcas únicas
+    public static function getAllUniqueMarcas()
+    {
+        return Marca::distinct()->get();
+    }
 }
