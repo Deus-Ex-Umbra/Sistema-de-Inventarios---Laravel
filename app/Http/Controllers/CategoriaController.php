@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CategoriaController extends Controller
 {
     //Obtener todas las categorías
-    public static function getAll()
+    public static function getAllCategorias()
     {
         return Categoria::all();
     }
@@ -19,7 +19,7 @@ class CategoriaController extends Controller
         return view('categorias.create');
     }
 
-    public static function create(Request $request)
+    public static function createCategoria(Request $request)
     {
         $validate = $request->validate([
             'nombre' => 'required|string|max:255'
@@ -34,7 +34,7 @@ class CategoriaController extends Controller
         return view('categorias.update', ['categoria' => Categoria::find($id)]);
     }
 
-    public static function update(Request $request, $id)
+    public static function updateCategoria(Request $request, $id)
     {
         $validate = $request->validate([
             'nombre' => 'required|string|max:255'
@@ -44,7 +44,7 @@ class CategoriaController extends Controller
     }
 
     //Eliminar una categoría
-    public static function delete($id)
+    public static function deleteCategoria($id)
     {
         Categoria::find($id)->delete();
         return redirect()->back();

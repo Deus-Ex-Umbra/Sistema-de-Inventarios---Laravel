@@ -14,7 +14,7 @@ class ProveedorController extends Controller
         return view('proveedores.index', ['proveedores' => self::getAll()]);
     }
 
-    public static function getAll()
+    public static function getAllProveedores()
     {
         return Proveedor::all();
     }
@@ -25,7 +25,7 @@ class ProveedorController extends Controller
         return view('proveedores.create');
     }
 
-    public static function create(Request $request)
+    public static function createProveedor(Request $request)
     {
         $validate = $request->validate([
             'nombre' => 'required|string|max:255',
@@ -56,7 +56,7 @@ class ProveedorController extends Controller
     }
 
     //Eliminar un proveedor
-    public static function delete($id)
+    public static function deleteProveedor($id)
     {
         Proveedor::find($id)->delete();
         return redirect()->route('proveedor.index')->with('success', 'Proveedor eliminado exitosamente');
