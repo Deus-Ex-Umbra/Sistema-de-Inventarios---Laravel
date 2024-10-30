@@ -22,7 +22,7 @@ class LoteController extends Controller
     //Obtener todos los lotes por producto
     public function viewAllLotesByProducto($producto_id)
     {
-        return view('lotes.index', ['lotes' => self::getAllLotesByProducto($producto_id)]);
+        return view('lotes.index', ['lotes' => self::getAllLotesByProducto($producto_id), 'id_producto' => $producto_id]);
     }
 
     public static function getAllLotesByProducto($producto_id)
@@ -65,7 +65,6 @@ class LoteController extends Controller
             'precio_unitario' => 'required|numeric',
             'fecha_ingreso' => 'required|date',
             'fecha_vencimiento' => 'required|date',
-            'producto_id' => 'required|exists:productos,id',
         ]);
         $lote = Lote::find($id);
         $lote->update($validated);

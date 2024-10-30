@@ -1,6 +1,76 @@
-@extends('layouts.app')
+<div class="encabezado">
+            <a href="{{ route('inventario.index') }}">
+                <div class="card">
+                    <img src="{{ asset('iconos/farmacia.svg') }}" />
+                    <h1>San Agustin</h1>
+                </div>
+            </a>
+            <ul class="example-2">
+                <li class="icon-content">
+                    <a
+                        href="{{ route('inventario.index') }}"
+                        aria-label="Spotify"
+                        data-social="spotify"
+                    >
+                        <div class="filled"></div>
+                        <img
+                            src="{{ asset('iconos/inventario.svg') }}"
+                            alt="Inventarios"
+                        />
+                    </a>
+                    <div class="tooltip">Inventarios</div>
+                </li>
+                <li class="icon-content">
+                    <a
+                        href="{{ route('producto.index') }}"
+                        aria-label="Dribbble"
+                        data-social="dribbble"
+                    >
+                        <div class="filled"></div>
+                        <img
+                            src="{{ asset('iconos/producto.svg') }}"
+                            alt="Productos"
+                        />
+                    </a>
+                    <div class="tooltip">Productos</div>
+                </li>
+                <li class="icon-content">
+                    <a
+                        href="{{ route('lote.index') }}"
+                        aria-label="Telegram"
+                        data-social="telegram"
+                    >
+                        <div class="filled"></div>
+                        <img src="{{ asset('iconos/lote.svg') }}" alt="Lotes" />
+                    </a>
+                    <div class="tooltip">Lotes</div>
+                </li>
+                <li class="icon-content">
+                    <a
+                        href="{{ route('proveedor.index') }}"
+                        aria-label="Pinterest"
+                        data-social="pinterest"
+                    >
+                        <div class="filled"></div>
+                        <img
+                            src="{{ asset('iconos/proveedor.svg') }}"
+                            alt="Proveedores"
+                        />
+                    </a>
+                    <div class="tooltip">Proveedores</div>
+                </li>
+            </ul>
+        </div>
+@php
+    use App\Http\Controllers\CategoriaController;
+    use App\Http\Controllers\MarcaController;
+    use App\Http\Controllers\ProveedorController;
 
-@section('content')
+    $categorias = CategoriaController::getAllUniqueCategorias();
+    $marcas = MarcaController::getAllUniqueMarcas();
+    $proveedores = ProveedorController::getAllUniqueProveedores();
+
+@endphp
 <div class="container">
     <h1>Crear Nuevo Producto</h1>
     <form action="{{ route('producto.store') }}" method="POST" enctype="multipart/form-data">
@@ -13,16 +83,6 @@
         <div class="form-group">
             <label for="descripcion">Descripción:</label>
             <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="cantidad_total">Cantidad Total:</label>
-            <input type="number" class="form-control" id="cantidad_total" name="cantidad_total" required>
-        </div>
-
-        <div class="form-group">
-            <label for="valor_total">Valor Total:</label>
-            <input type="number" step="0.01" class="form-control" id="valor_total" name="valor_total" required>
         </div>
 
         <div class="form-group">
@@ -57,16 +117,8 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="inventario_id">Inventario:</label>
-            <select class="form-control" id="inventario_id" name="inventario_id" required>
-                @foreach($inventarios as $inventario)
-                    <option value="{{ $inventario->id }}">{{ $inventario->nombre }}</option>
-                @endforeach
-            </select>
-        </div>
+        <input type="hidden" name="inventario_id" value="{{ $inventario_id }}">
 
         <button type="submit" class="btn btn-primary">Crear Producto</button>
     </form>
 </div>
-@endsection
