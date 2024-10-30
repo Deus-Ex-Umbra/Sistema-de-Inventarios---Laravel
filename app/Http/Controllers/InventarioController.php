@@ -106,8 +106,8 @@ class InventarioController extends Controller
 
     public static function deleteInventario($id)
     {
-        Inventario::find($id)->delete();
-        return redirect()->route('inventario.index')->with('success', 'Inventario eliminado exitosamente');
+        Inventario::findOrFail($id)->delete();
+        return back()->with('success', 'Inventario eliminado exitosamente');
     }
 
     //Mostrar inventarios según una lista de inventarios
